@@ -18,14 +18,23 @@ const getAtcoderProblemName = () => {
   tempDiv.innerHTML = cleanedHTML;
   return tempDiv.textContent.trim();
 };
-async function addProblemToTracker() {
+
+function getFromSync(keys) {
+  return new Promise((resolve, reject) => {
+    chrome.storage.sync.get(keys, (result) => {
+      if (chrome.runtime.lastError) reject(chrome.runtime.lastError);
+      else resolve(result[keys] || []);
+    });
+  });
+}
+
+const getProblemInfo = () => {
   const url = window.location.href;
   const KEY = url.includes("https://leetcode.com/problems/")
     ? LC_Key
     : url.includes("https://atcoder.jp/contests/")
     ? ATCODER_Key
     : CF_Key;
-  const id = url;
   const problemName =
     KEY == LC_Key
       ? document.getElementsByClassName(
@@ -34,8 +43,34 @@ async function addProblemToTracker() {
       : KEY == CF_Key
       ? document.querySelector(".problem-statement .title").innerText
       : getAtcoderProblemName();
-        
+
+  const id = problemName + KEY;
+
+  const toBeProblem = {
+    id: id,
+    name: problemName,
+    key: KEY,
+    url: url,
+  };
+  return { toBeProblem, KEY, id };
+};
+
+async function addProblemToTracker() {
+  const problemInfo = getProblemInfo();
+  const { toBeProblem, KEY, id } = problemInfo;
+  const currentProblems = await getFromSync(KEY);
+  if (currentProblems.some((problem) => problem.id === id)) {
+    alert("Problem already exists in tracker!");
+    return;
+  }
+  const updatedProblems = [...currentProblems, toBeProblem];
+
+  chrome.storage.sync.set({ [KEY]: updatedProblems }, () => {
+    console.log("Problem added to tracker:", updatedProblems);
+    alert("Problem added to tracker!");
+  });
 }
+
 const addButtonToLeetcode = () => {
   const placeHolder = document.getElementsByClassName(
     "relative inline-flex items-center justify-center text-caption px-2 py-1 gap-1 rounded-full bg-fill-secondary cursor-pointer transition-colors hover:bg-fill-primary hover:text-text-primary text-sd-secondary-foreground hover:opacity-80"
@@ -68,7 +103,10 @@ const addButtonToLeetcode = () => {
 
     newButton.classList.add("problem-tracker-add-button");
 
-    newButton.addEventListener("click", () => {});
+    newButton.addEventListener("click", () => {
+      addProblemToTracker();
+      console.log("Track Problem button clicked.");
+    });
 
     placeHolder.appendChild(newButton);
   }
@@ -88,8 +126,8 @@ const addButtonToCodeforces = () => {
     linkText.addEventListener("click", (event) => {
       const clickedElement = event.target;
 
-      console.log(clickedElement);
-      alert("added");
+      addProblemToTracker();
+      console.log("Track Problem button clicked.");
     });
 
     newButton.appendChild(linkText);
@@ -113,7 +151,9 @@ const addButtonToAtcoder = () => {
 
     newButton.setAttribute("data-platform", "atcoder");
 
-    newButton.addEventListener("click", () => {});
+    newButton.addEventListener("click", () => {
+      addProblemToTracker();
+    });
 
     problemTitleSpan.appendChild(newButton);
     console.log("Track Problem button added to AtCoder page.");
