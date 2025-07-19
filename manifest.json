@@ -1,0 +1,40 @@
+{
+  "manifest_version": 3,
+  "name": "Problem Tracker",
+  "version": "0.1",
+  "author": "Saurav Chaurasiya",
+  "description": "A chrome extention to efficiently track problems across different platforms.",
+  "permissions": [
+    "storage"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://leetcode.com/problems/*",
+        "https://codeforces.com/problemset/*",
+        "https://atcoder.jp/contests/*"
+      ],
+      "js": [
+        "content.js"
+      ]
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "web_accessible_resources" : [
+    {
+      "resources": ["/assets/*"],
+      "matches" : ["<all_urls>"]
+    }
+  ],
+  "action": {
+    "default_icon": {
+      "16": "./assets/logo.png",
+      "24": "./assets/logo.png",
+      "32": "./assets/logo.png"
+    },
+    "default_popup": "popUp.html",
+    "default_title": "Problem Tracker"
+  }
+}
