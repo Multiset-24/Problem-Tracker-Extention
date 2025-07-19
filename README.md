@@ -5,23 +5,7 @@
 This extention is used to track DSA problems across different platoforms across different devices given that the same google account is logged in devices.
 
 ## File structure
-
-PROBLEM-TRACKER-EXTENTION/
-├── assets/
-│   ├── atcoderButton.png
-│   ├── leetcodeButton.png
-│   ├── codeforcesButton.png
-│   ├── icon.png
-│   └── screenShot.png
-├── background.js
-├── popup.html
-├── popup.js
-├── popup.css
-├── content.js
-├── manifest.json
-├── .gitignore
-├── LICENSE
-└── README.md
+<image src="./assets/fileStructure.png">
 
 ## Installation
 
