@@ -208,4 +208,6 @@ function addButton() {
   else if (url.includes("https://atcoder.jp/contests/")) addButtonToAtcoder();
 }
 
-window.onload(addButton());
+window.addEventListener("load", () => {
+  addButton();
+});

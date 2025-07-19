@@ -1,0 +1,169 @@
+:root {
+    --bg-dark: #1f2937;
+    /* slate-800 */
+    --bg-darker: #111827;
+    /* slate-900 */
+    --border: #374151;
+    /* slate-700 */
+    --accent: #06b6d4;
+    /* cyan-400 */
+    --accent-hover: #0891b2;
+    --text-light: #f9fafb;
+    /* slate-50 */
+    --text-muted: #9ca3af;
+    /* slate-400 */
+    --shadow: rgba(0, 0, 0, 0.4);
+    --leetcode: #f59e0b;
+    /* orange-500 */
+    --codeforces: #3b82f6;
+    /* blue-500 */
+    --atcoder: #a855f7;
+    /* purple-500 */
+}
+
+body {
+    background-color: var(--bg-darker);
+    border-radius: 100px;
+}
+
+div.w-\[450px\] {
+    background: var(--bg-dark);
+    border-radius: 12px;
+    box-shadow: 0 8px 16px var(--shadow);
+    border: 1px solid var(--border);
+    padding: 1rem;
+}
+
+header h1 {
+    color: var(--accent);
+    font-size: 1.75rem;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.5px;
+}
+
+input#searchInput,
+select#platformFilter {
+    background: var(--bg-darker);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.30rem 0.20rem;
+    color: var(--text-light);
+    font-size: 0.9rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    margin-bottom: 1rem;
+}
+
+input#searchInput:focus,
+select#platformFilter:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.3);
+}
+
+#problemList {
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+}
+
+#problemList::-webkit-scrollbar {
+    width: 6px;
+}
+
+#problemList::-webkit-scrollbar-track {
+    background: var(--bg-dark);
+    border-radius: 3px;
+}
+
+#problemList::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 3px;
+}
+
+#problemList::-webkit-scrollbar-thumb:hover {
+    background: var(--accent);
+}
+
+.problem-card {
+    background: var(--bg-darker);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    margin-bottom: 0.75rem;
+}
+
+.problem-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px var(--shadow);
+    border-color: var(--accent);
+}
+
+.problem-card a {
+    color: var(--text-light);
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.problem-card a:hover {
+    color: var(--accent);
+}
+
+.platform-badge {
+    padding: 0.15rem 0.5rem;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #fff;
+}
+
+.platform-LEETCODE_TRACKER_KEY,
+.platform-leetcode {
+    background: var(--leetcode);
+}
+
+.platform-CODEFORCES_TRACKER_KEY,
+.platform-codeforces {
+    background: var(--codeforces);
+}
+
+.platform-ATCODER_TRACKER_KEY,
+.platform-atcoder {
+    background: var(--atcoder);
+}
+
+.delete-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    padding: 0;
+    transition: color 0.2s;
+}
+
+.delete-btn:hover {
+    color: #f87171;
+    /* red-400 */
+}
+
+#message {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+}
+
+@media (max-width: 480px) {
+    div.w-\[450px\] {
+        width: 100% !important;
+    }
+}
+
+div.w-\[450px\] {
+    width: 300px !important;
+    max-height: 500px;
+}
