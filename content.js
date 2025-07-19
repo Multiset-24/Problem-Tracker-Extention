@@ -1,11 +1,41 @@
 // content.js
-// Author:
+// Author:Saurav chaurasiya
 // Author URI: https://
-// Author Github URI: https://www.github.com/
-// Project Repository URI: https://github.com/
+// Author Github URI: https://github.com/Multiset-24
+// Project Repository URI: https://github.com/Multiset-24/Problem-Tracker-Extention
 // Description: Handles all the webpage level activities (e.g. manipulating page data, etc.)
 // License: MIT
+const LC_Key = "LEETCODE_TRACKER_KEY";
+const CF_Key = "CODEFORCES_TRACKER_KEY";
+const ATCODER_Key = "ATCODER_TRACKER_KEY";
 
+const getAtcoderProblemName = () => {
+  const h2Span = document.querySelector(".h2");
+  let cleanedHTML = h2Span.innerHTML
+    .replace(/<a[^>]*>.*?<\/a>/gi, "")
+    .replace(/<button[^>]*>.*?<\/button>/gi, "");
+  const tempDiv = document.createElement("div");
+  tempDiv.innerHTML = cleanedHTML;
+  return tempDiv.textContent.trim();
+};
+async function addProblemToTracker() {
+  const url = window.location.href;
+  const KEY = url.includes("https://leetcode.com/problems/")
+    ? LC_Key
+    : url.includes("https://atcoder.jp/contests/")
+    ? ATCODER_Key
+    : CF_Key;
+  const id = url;
+  const problemName =
+    KEY == LC_Key
+      ? document.getElementsByClassName(
+          "no-underline hover:text-blue-s dark:hover:text-dark-blue-s truncate cursor-text whitespace-normal hover:!text-[inherit]"
+        )[0].innerText
+      : KEY == CF_Key
+      ? document.querySelector(".problem-statement .title").innerText
+      : getAtcoderProblemName();
+        
+}
 const addButtonToLeetcode = () => {
   const placeHolder = document.getElementsByClassName(
     "relative inline-flex items-center justify-center text-caption px-2 py-1 gap-1 rounded-full bg-fill-secondary cursor-pointer transition-colors hover:bg-fill-primary hover:text-text-primary text-sd-secondary-foreground hover:opacity-80"
@@ -54,11 +84,15 @@ const addButtonToCodeforces = () => {
     const newButton = document.createElement("li");
     const linkText = document.createElement("a");
     linkText.textContent = "Track Problem";
-    linkText.href = "#";
+
+    linkText.addEventListener("click", (event) => {
+      const clickedElement = event.target;
+
+      console.log(clickedElement);
+      alert("added");
+    });
+
     newButton.appendChild(linkText);
-
-    linkText.addEventListener("click", (event) => {});
-
     placeHolder.appendChild(newButton);
     console.log("Track Problem button added to Codeforces page.");
   }
@@ -126,7 +160,12 @@ function addButton() {
   const url = window.location.href;
 
   if (url.includes("https://leetcode.com/problems/")) addButtonToLeetcode();
-  else if (url.includes("https://codeforces.com/problemset/problem/"))addButtonToCodeforces();
+  else if (
+    url.includes("https://codeforces.com/problemset/problem/") ||
+    url.includes("https://codeforces.com/contest/")
+  )
+    addButtonToCodeforces();
   else if (url.includes("https://atcoder.jp/contests/")) addButtonToAtcoder();
 }
-addButton();
+
+window.onload(addButton());

@@ -5,14 +5,16 @@
   "author": "Saurav Chaurasiya",
   "description": "A chrome extention to efficiently track problems across different platforms.",
   "permissions": [
-    "storage"
+    "storage",
+    "tabs"
   ],
   "content_scripts": [
     {
       "matches": [
         "https://leetcode.com/problems/*",
         "https://codeforces.com/problemset/*",
-        "https://atcoder.jp/contests/*"
+        "https://atcoder.jp/contests/*",
+        "https://codeforces.com/contest/*"
       ],
       "js": [
         "content.js"
