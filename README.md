@@ -1,4 +1,4 @@
-# Problem Tracker Extention
+# Problem Tracker Extension
 
 ## Introduction 
 
